@@ -27,9 +27,9 @@ def computeSSP(EEG, info, threshold):
     Returns a list of SSP projection vectors above the pre-defined threshold (variance explained).
     '''
     
-    projs = mne.compute_proj_epochs(EEG, n_eeg=5, n_jobs=1, verbose=True)
+    projs = mne.compute_proj_epochs(EEG, n_eeg=10, n_jobs=1, verbose=True)
 
-    p = [projs[i]['explained_var'] for i in range(5)]
+    p = [projs[i]['explained_var'] for i in range(10)]
 
     # If variance explained is above the pre-defined threshold, use the SSP projection vector
     threshold_idx = analyzeVar(p, threshold)
@@ -58,14 +58,15 @@ def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, rejec
         
     epoch = mne.EpochsArray(eeg, info, tmin=tmin, baseline=None, verbose=False)
     
+    # removed 
     # Channel rejection
-    if reject_chs: 
+    '''if reject_chs: 
         bads = parameters.channelNamesExcluded
-        epoch.drop_channels(bads)
+        epoch.drop_channels(bads)'''
     
     # SSP correction
     if SSP:
-        #projs = computeSSP(epoch, info, SSP_threshold)
+        projs = computeSSP(epoch, info, SSP_threshold)
         epoch.add_proj(projs)
         epoch.apply_proj()
            

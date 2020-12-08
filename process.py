@@ -27,9 +27,9 @@ def computeSSP(EEG, info, threshold):
     Returns a list of SSP projection vectors above the pre-defined threshold (variance explained).
     '''
     
-    projs = mne.compute_proj_epochs(EEG, n_eeg=10, n_jobs=1, verbose=True)
+    projs = mne.compute_proj_epochs(EEG, n_eeg=20, n_jobs=1, verbose=True)
 
-    p = [projs[i]['explained_var'] for i in range(10)]
+    p = [projs[i]['explained_var'] for i in range(20)]
 
     # If variance explained is above the pre-defined threshold, use the SSP projection vector
     threshold_idx = analyzeVar(p, threshold)
@@ -42,7 +42,8 @@ def computeSSP(EEG, info, threshold):
 
 
 def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, reject_chs=parameters.rejectChannels,\
-                  opt_detrend=parameters.detrend, SSP_threshold=parameters.thresholdSSP):
+                  opt_detrend=parameters.detrend, SSP_threshold=parameters.thresholdSSP, phase=parameters.filterPhase,\
+                  HP=parameters.highPass, LP=parameters.lowPass):
     '''    
     Preprocesses EEG data epoch-wise.      
     '''
@@ -64,11 +65,26 @@ def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, rejec
         bads = parameters.channelNamesExcluded
         epoch.drop_channels(bads)'''
     
+    # Lowpass
+    epoch.filter(HP, LP, fir_design='firwin', phase=phase, verbose=False)
+    
+    # Downsample
+    epoch.resample(parameters.samplingRateResample, npad='auto', verbose=False)
+    
+    # Apply baseline correction
+    epoch.apply_baseline(baseline=(None,0), verbose=False)
+    
     # SSP correction
     if SSP:
         projs = computeSSP(epoch, info, SSP_threshold)
         epoch.add_proj(projs)
         epoch.apply_proj()
+        
+    # Re-referencing
+    epoch.set_eeg_reference(verbose=False)
+    
+    # Apply baseline after rereference
+    epoch.apply_baseline(baseline=(None,0), verbose=False)
            
     epoch = epoch.get_data()[0]
     

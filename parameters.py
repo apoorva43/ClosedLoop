@@ -30,7 +30,7 @@ channelNamesExcluded = list(set(channelNames) - set(channelNamesSelected))
 
 detrend = True # linear detrending of EEG signal 
 SSP = True # apply SSP artifact correction
-thresholdSSP = 0.9 # variance threshold for rejection of SSP projections
+thresholdSSP = 0.2 # variance threshold for rejection of SSP projections
 
 # Added new parameters 
 highPass = 0  # Hz

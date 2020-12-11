@@ -32,8 +32,8 @@ detrend = True # linear detrending of EEG signal
 SSP = True # apply SSP artifact correction
 thresholdSSP = 0.1 # variance threshold for rejection of SSP projections
 
-# Added new parameters 
-highPass = 0  # Hz
-lowPass = 40 # Hz
+# Added new parameters - for new functions in process.py
+highPass = 0  
+lowPass = 40 
 filterPhase = 'zero-double'
 samplingRateResample = 100

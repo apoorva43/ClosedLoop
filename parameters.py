@@ -18,9 +18,9 @@ def createInfoMNE(channel_names, sampling_freq):
 
 baselineTime = -0.1 # baseline for each epoch (seconds)
 
-# all channels in the system
-channelNames = ['P7','P4','Cz','Pz','P3','P8','O1','O2','T8','F8','C4','F4','Fp2','Fz','C3','F3','Fp1',\
-                'T7','F7','Oz','PO3','AF3','FC5','FC1','CP5','CP1','CP2','CP6','AF4','FC2','FC6','PO4']
+# channel names accoring to the .mat file contents
+channelNames = ['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2','F7','F8',\
+                'FC3','FC4','P7','P8','Fz','Cz','Pz','FCz','Oz','AFz','CPz','POz'] 
 #montage = 'standard_1020' 
 info = createInfoMNE(channelNames, sampling_freq=100)
 

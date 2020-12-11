@@ -48,8 +48,8 @@ def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, rejec
     Preprocesses EEG data epoch-wise.      
     '''
     
-    n_samples = eeg.shape[0]
-    n_channels = eeg.shape[1]
+    n_samples = eeg.shape[1]
+    n_channels = eeg.shape[0]
     eeg = np.reshape(eeg.T,(1,n_channels,n_samples))
     tmin = parameters.baselineTime 
     

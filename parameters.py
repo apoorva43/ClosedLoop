@@ -25,8 +25,8 @@ channelNames = ['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2','F7','F8',\
 info = createInfoMNE(channelNames, sampling_freq=100)
 
 rejectChannels = True
-channelNamesSelected =  ['Cz'] # concetrate only on the Cz channel
-channelNamesExcluded = list(set(channelNames) - set(channelNamesSelected))
+channelNamesExcluded = ['Fp1','Fp2','F7','F8','Fz']
+channelNamesSelected = list(set(channelNames) - set(channelNamesExcluded))
 
 detrend = True # linear detrending of EEG signal 
 SSP = True # apply SSP artifact correction
@@ -36,4 +36,4 @@ thresholdSSP = 0.1 # variance threshold for rejection of SSP projections
 highPass = 0  
 lowPass = 40 
 filterPhase = 'zero-double'
-samplingRateResample = 100
+samplingRateResample = 250 # resample to 250 Hz

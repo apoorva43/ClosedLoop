@@ -61,9 +61,9 @@ def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, rejec
     
     # removed 
     # Channel rejection
-    '''if reject_chs: 
+    if reject_chs: 
         bads = parameters.channelNamesExcluded
-        epoch.drop_channels(bads)'''
+        epoch.drop_channels(bads)
     
     # Lowpass
     epoch.filter(HP, LP, fir_design='firwin', phase=phase, verbose=False)

@@ -25,7 +25,7 @@ channelNames = ['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2','F7','F8',\
 info = createInfoMNE(channelNames, sampling_freq=100)
 
 rejectChannels = True
-channelNamesExcluded = ['Fp1','Fp2','F7','F8','Fz']
+channelNamesExcluded = ['Fp1','Fp2','F7','F8']
 channelNamesSelected = list(set(channelNames) - set(channelNamesExcluded))
 
 detrend = True # linear detrending of EEG signal 

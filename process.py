@@ -27,9 +27,9 @@ def computeSSP(EEG, info, threshold):
     Returns a list of SSP projection vectors above the pre-defined threshold (variance explained).
     '''
     
-    projs = mne.compute_proj_epochs(EEG, n_grad=2, n_mag=2, n_eeg=10, n_jobs=1, verbose=True)
+    projs = mne.compute_proj_epochs(EEG, n_grad=2, n_mag=2, n_eeg=20, n_jobs=1, verbose=True)
 
-    p = [projs[i]['explained_var'] for i in range(10)]
+    p = [projs[i]['explained_var'] for i in range(20)]
 
     # If variance explained is above the pre-defined threshold, use the SSP projection vector
     threshold_idx = analyzeVar(p, threshold)
@@ -74,17 +74,23 @@ def preproc1epoch(eeg, info=parameters.info, projs=[], SSP=parameters.SSP, rejec
     # Apply baseline correction
     epoch.apply_baseline(baseline=(None,0), verbose=False)
     
-    # SSP correction
+    # SSP correction -- check how to plot the projections??
     if SSP:
         projs = computeSSP(epoch, info, SSP_threshold)
+        print(projs)
         epoch.add_proj(projs)
         epoch.apply_proj()
         
-    # Re-referencing
+    #projs = mne.compute_proj_raw(epoch) # not base-raw class data
+    mne.viz.plot_projs_topomap(projs, colorbar=True, vlim='joint', info=info)
+    
+    print("Sanity check\n")
+    
+    '''# Re-referencing
     epoch.set_eeg_reference(verbose=False)
     
     # Apply baseline after rereference
-    epoch.apply_baseline(baseline=(None,0), verbose=False)
+    epoch.apply_baseline(baseline=(None,0), verbose=False)'''
            
     epoch = epoch.get_data()[0]
     

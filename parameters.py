@@ -22,9 +22,9 @@ baselineTime = -0.1 # baseline for each epoch (seconds)
 channelNames = ['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2','F7','F8',\
                 'FC3','FC4','P7','P8','Fz','Cz','Pz','FCz','Oz','AFz','CPz','POz'] 
 #montage = 'standard_1020' 
-info = createInfoMNE(channelNames, sampling_freq=100)
+info = createInfoMNE(channelNames, sampling_freq=250)
 
-rejectChannels = True
+rejectChannels = False
 channelNamesExcluded = ['Fp1','Fp2','F7','F8']
 channelNamesSelected = list(set(channelNames) - set(channelNamesExcluded))
 
